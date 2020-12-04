@@ -1,8 +1,9 @@
 //required packages
 const inquirer = require("inquirer");
 const validator = require("validator");
-const generateProfile = require("./src/generateProfile");
 const fs = require("fs");
+const generateProfile = require("./src/generateProfile");
+
 
 
 //required classes
@@ -12,67 +13,55 @@ const Intern = require("./lib/Intern");
 
 
 //array of questions for employees
- 
-    const questions = [
-    {
-        type: "input",
-        message: "Please enter employee's full name:",
-        name: "fullname",
-        validate: value => {
-            let regName = /^[a-zA-Z]+ [a-zA-Z]+$/;
-            if (!regName.test(value)) {
-                return "'Please enter your first & last name";
-            }
+const promptUser = () => {
+    return inquirer.prompt([
+      {
+        type: 'input',
+        name: 'fullname',
+        message: 'Please enter employees full name? (Required)',
+        validate: nameInput => {
+          if (nameInput) {
             return true;
-            }
-        
-    },
-    {
-        type: "input",
-        message: "Please enter employee's id number:",
-        name: "id",
-        validate: value => {
-            if (validator.isInt(value)) {
-                return true;
-            }
-            return "Please enter a valid ID Number.";
+          } else {
+            console.log('Please enter your full name!');
+            return false;
+          }
         }
-    },
-    {
-        type: "input",
-        message: "Please enter employee's email address",
-        name: "email",
-        validate: value => {
-            if (validator.isEmail(value)) {
-                return true;
-            }
-            return "Please enter a valid e-mail address.";
+      },
+      {
+        type: 'input',
+        name: 'id',
+        message: 'Please enter your employees id number(Required)',
+        validate: nameInput => {
+          if (nameInput) {
+            return true;
+          } else {
+            console.log('Please enter your id number!');
+            return false;
+          }
         }
-    },
-    {
-        type: "list",
-        message: "Please choose the role of the employee:",
-        choices: ['Manager', 'Engineer', 'Intern'],
-        name: "role"   
-    },
+      },
+      {
+        type: 'input',
+        name: 'email',
+        message: 'Please enter your email address.',
+        validate: nameInput => {
+            if (nameInput) {
+              return true;
+            } else {
+              console.log('Please enter a valid email address!');
+              return false;
+            }
+        }
+      },
+      {
+      type: 'checkbox',
+      name: 'role',
+      message: 'Please choose the role of the employee:',
+      choices: ['Intern', 'Manager', 'Engineer'],
+    }
+    ]);
+  };
+ 
 
-];
-
-//function to write html file
-function writeToFile(fileName, data) {
-    return fs.writeFileSync(fileName, generateProfile(data));
-}
-
-//function to initialize program 
-function init() {
-    inquirer.prompt(questions).then(answers => {
-        
-
-       
-        writeToFile("renderedteam.html", answers);
-      
-    })
-}
-
-//function call to initialize program 
-init();
+promptUser();

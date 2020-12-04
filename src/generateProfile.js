@@ -1,3 +1,4 @@
+
 //function to generate html for profile
 
 function generateProfile(data) {
