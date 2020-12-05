@@ -12,56 +12,326 @@ const Engineer = require("./lib/Engineer");
 const Intern = require("./lib/Intern");
 
 
-//array of questions for employees
+//array of questions for all employees
 const promptUser = () => {
     return inquirer.prompt([
       {
         type: 'input',
         name: 'fullname',
         message: 'Please enter employees full name? (Required)',
-        validate: nameInput => {
-          if (nameInput) {
+        validate: value => {
+            var regName = /^[a-zA-Z]+ [a-zA-Z]+$/;
+            if (!regName.test(value)) {
+                return "'Please enter your full name.";
+            }
             return true;
-          } else {
-            console.log('Please enter your full name!');
-            return false;
-          }
-        }
-      },
+            }
+        },
+
       {
         type: 'input',
         name: 'id',
         message: 'Please enter your employees id number(Required)',
-        validate: nameInput => {
-          if (nameInput) {
-            return true;
-          } else {
-            console.log('Please enter your id number!');
-            return false;
-          }
+        validate: value => {
+            if (validator.isInt(value)) {
+                return true;
+            }
+            return "Please enter your id number.";
         }
-      },
+    },
+
       {
         type: 'input',
         name: 'email',
-        message: 'Please enter your email address.',
-        validate: nameInput => {
-            if (nameInput) {
-              return true;
-            } else {
-              console.log('Please enter a valid email address!');
-              return false;
+        message: 'Please enter the employees email address.',
+        validate: value => {
+            if (validator.isEmail(value)) {
+                return true;
             }
+            return "Please enter a valid e-mail address.";
         }
-      },
+        },
       {
-      type: 'checkbox',
-      name: 'role',
+      type: 'list',
       message: 'Please choose the role of the employee:',
       choices: ['Intern', 'Manager', 'Engineer'],
+      name: "role"
+    },
+    {
+        type: 'confirm',
+        name: 'confirmAdd',
+        message: 'Would you like to add another employee?',
+        default: true
+    },
+    {
+        type: 'input',
+        name: 'add',
+        message: 'Are you sure?',
+        when: ({confirmAdd}) => {
+            if (confirmAdd) {
+                return true;
+            } else {
+                return false;
+            }
+        } 
     }
-    ]);
+]).then(data => {
+    if (data.confirmAdd) {
+        return addMoreEmployees()
+    } else {
+        return data;
+    }
+});
+
   };
+
+
+
+
+  //addMoreEmployees function
+  const addMoreEmployees = () => {
+      return inquirer.prompt([
+          {
+            type: 'list',
+            name: 'roleOfEmployee',
+            message: 'Please choose the role of the employee that you would like to add.',
+            choices: ['Intern', 'Manager', 'Engineer'] 
+          }
+      ]).then(data => {
+          if (data.roleOfEmployee === 'Manager') {
+              return manager();
+          }
+          if (data.roleOfEmployee === 'Intern') {
+              return intern();
+          }
+          if (data.roleOfEmployee === 'Engineer') {
+              return engineer()
+          }
+      })
+  };
+
+  //manager function 
+  const manager = () => {
+      return inquirer.prompt([
+        {
+            type: 'input',
+            name: 'fullname',
+            message: 'Please enter full name of the manager. (Required)',
+            validate: value => {
+                var regName = /^[a-zA-Z]+ [a-zA-Z]+$/;
+                if (!regName.test(value)) {
+                    return "'Please enter the managers full name.";
+                }
+                return true;
+                }
+            },
+    
+          {
+            type: 'input',
+            name: 'id',
+            message: 'Please enter the managers id number(Required)',
+            validate: value => {
+                if (validator.isInt(value)) {
+                    return true;
+                }
+                return "Please enter a valid id number for your manager.";
+            }
+        },
+    
+          {
+            type: 'input',
+            name: 'email',
+            message: 'Please enter the managers email address.',
+            validate: value => {
+                if (validator.isEmail(value)) {
+                    return true;
+                }
+                return "Please enter a valid e-mail address.";
+            }
+            },
+            {
+                type: 'number',
+                name: 'officeNumber',
+                message: 'What is the managers office number?'
+            },
+            {
+                type: 'confirm',
+                name: 'confirmAdd',
+                message: 'Would you like to add another employee?',
+                default: true
+            },
+            {
+                type: 'input',
+                name: 'add',
+                message: 'Are you sure?',
+                when: ({confirmAdd}) => {
+                    if (confirmAdd) {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                } 
+            },
+        ]).then(data => {
+            if (data.confirmAdd) {
+                return addMoreEmployees()
+            } else {
+                return data;
+            }     
+    
+  });
+};
+
+
+
+  //intern function 
+  const intern = () => {
+    return inquirer.prompt([
+        {
+          type: 'input',
+          name: 'fullname',
+          message: 'Please enter employees full name? (Required)',
+          validate: value => {
+              var regName = /^[a-zA-Z]+ [a-zA-Z]+$/;
+              if (!regName.test(value)) {
+                  return "'Please enter your full name.";
+              }
+              return true;
+              }
+          },
+  
+        {
+          type: 'input',
+          name: 'id',
+          message: 'Please enter your employees id number(Required)',
+          validate: value => {
+              if (validator.isInt(value)) {
+                  return true;
+              }
+              return "Please enter your id number.";
+          }
+      },
+  
+        {
+          type: 'input',
+          name: 'email',
+          message: 'Please enter the employees email address.',
+          validate: value => {
+              if (validator.isEmail(value)) {
+                  return true;
+              }
+              return "Please enter a valid e-mail address.";
+          }
+          },
+          {
+            type: "input",
+            message: "What school did this intern attend?",
+            name: "school"
+          },
+
+      {
+          type: 'confirm',
+          name: 'confirmAdd',
+          message: 'Would you like to add another employee?',
+          default: true
+      },
+      {
+          type: 'input',
+          name: 'add',
+          message: 'Are you sure?',
+          when: ({confirmAdd}) => {
+              if (confirmAdd) {
+                  return true;
+              } else {
+                  return false;
+              }
+          } 
+      }
+  ]).then(data => {
+      if (data.confirmAdd) {
+          return addMoreEmployees()
+      } else {
+          return data;
+      }
+  });
+  
+
+
+}
+
+  //engineer function
+  const engineer = () => {
+    return inquirer.prompt([
+        {
+          type: 'input',
+          name: 'fullname',
+          message: 'Please enter employees full name? (Required)',
+          validate: value => {
+              var regName = /^[a-zA-Z]+ [a-zA-Z]+$/;
+              if (!regName.test(value)) {
+                  return "'Please enter your full name.";
+              }
+              return true;
+              }
+          },
+  
+        {
+          type: 'input',
+          name: 'id',
+          message: 'Please enter your employees id number(Required)',
+          validate: value => {
+              if (validator.isInt(value)) {
+                  return true;
+              }
+              return "Please enter your id number.";
+          }
+      },
+  
+        {
+          type: 'input',
+          name: 'email',
+          message: 'Please enter the employees email address.',
+          validate: value => {
+              if (validator.isEmail(value)) {
+                  return true;
+              }
+              return "Please enter a valid e-mail address.";
+          }
+          },
+          {
+            type: "input",
+            message: "What is the engineers github username?",
+            name: "github"
+          },
+
+      {
+          type: 'confirm',
+          name: 'confirmAdd',
+          message: 'Would you like to add another employee?',
+          default: true
+      },
+      {
+          type: 'input',
+          name: 'add',
+          message: 'Are you sure?',
+          when: ({confirmAdd}) => {
+              if (confirmAdd) {
+                  return true;
+              } else {
+                  return false;
+              }
+          } 
+        }
+    ]).then(data => {
+        if (data.confirmAdd) {
+            return addMoreEmployees()
+        } else {
+            return data;
+        }
+    });
+    
+    
+}
  
 
 promptUser();
