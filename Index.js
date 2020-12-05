@@ -6,6 +6,7 @@ const generateProfile = require("./src/generateProfile");
 
 
 
+
 //required classes
 const Manager = require("./lib/Manager");
 const Engineer = require("./lib/Engineer");
@@ -19,13 +20,7 @@ const promptUser = () => {
         type: 'input',
         name: 'fullname',
         message: 'Please enter employees full name? (Required)',
-        validate: value => {
-            var regName = /^[a-zA-Z]+ [a-zA-Z]+$/;
-            if (!regName.test(value)) {
-                return "'Please enter your full name.";
-            }
-            return true;
-            }
+
         },
 
       {
@@ -334,4 +329,11 @@ const promptUser = () => {
 }
  
 
-promptUser();
+function init() {
+    promptUser()
+        .then(questionData => {
+            return generateProfile(questionData);
+        })
+    }
+
+init();
