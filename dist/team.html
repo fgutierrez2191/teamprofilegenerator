@@ -1,35 +1,4 @@
 
-//function to generate html for profile
-
-const generateProfile = (team) => {
-    const genManager = (manager) => {
-        return `
-        <h2>${manager.getName()}</h2>`
-    }
-
-    const genEngineer = (engineer) => {
-        return `
-        <h2>${engineer.getName()}</h2>`
-
-    }
-
-    const genIntern = (intern) => {
-        return `
-        <h2>${intern.getName()}</h2>`
-    }
-
-    const html = [];
-    html.push(team.filter(emp => emp.getRole()=== "Manager").map(manager => genManager(manager)).join(""))
-
-    html.push(team.filter(emp => emp.getRole()=== "Engineer").map(engineer => genEngineer(engineer)).join(""))
-
-    html.push(team.filter(emp => emp.getRole()=== "Intern").map(Intern => genIntern(Intern)).join(""))
-
-    return html.join("");
-
-}
-module.exports = team => {
-    return `
     <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -53,16 +22,14 @@ module.exports = team => {
     <div class="container">
         <div class="row">
             <div class="team-area col-12 d-flex justify-content-center">
-                ${generateProfile(team)}
+                
+        <h2>felix g</h2>
+        <h2>jguti g</h2>
+        <h2>soren g</h2>
             </div>
         </div>
     </div>
 </body>
 </html>
    
-    `
-}
-
-
-
- // module.exports = generateProfile;
+    
