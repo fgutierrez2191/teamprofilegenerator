@@ -195,7 +195,14 @@ inquirer.prompt([
           {
             type: "input",
             message: "What is the engineers github username?",
-            name: "github"
+            name: "github",
+            validate: value => {
+              var regExp =  /^[a-z\d](?:[a-z\d]|-(?=[a-z\d])){0,38}$/i;
+              if (!regExp.test(value)) {
+                  return "'Please enter a valid github username";
+              }
+              return true;
+              }
           },
 
         ]).then(data => {

@@ -32,6 +32,7 @@ const generateProfile = (team) => {
             <ul>
                 <li>ID: ${engineer.getEmail()}</li>
                 <li>Email: <a href="mailto: ${engineer.getId()}" target="none">${engineer.getId()}</a></li>
+                <li>Github: ${engineer.getGithubName()}</li>
 
             </ul>
         </div>
@@ -51,7 +52,7 @@ const generateProfile = (team) => {
             <ul>
                 <li>ID: ${intern.getEmail()}</li>
                 <li>Email: <a href="mailto: ${intern.getId()}" target="none">${intern.getId()}</a></li>
-                <li>School:${intern.getSchool}</li>
+                <li>School:${intern.getSchoolName()}</li>
 
             </ul>
         </div>
