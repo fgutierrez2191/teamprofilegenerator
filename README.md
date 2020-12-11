@@ -1,7 +1,7 @@
   # Title
   ReadMe Generator
 
-   [A quick video tutorial](<iframe src="https://drive.google.com/file/d/1UkJBkIcxsjO390H73NFpC6eFaQC24keu/preview" width="640" height="480"></iframe>)
+   [A quick video tutorial](https://drive.google.com/file/d/1UkJBkIcxsjO390H73NFpC6eFaQC24keu/view)
 
   ## Username
   fgutierrez2191
