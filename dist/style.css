@@ -5,6 +5,11 @@
     font-family: 'Montserrat', sans-serif;
 }
 
+.jumbotron {
+    background-color: blue;
+    color: white;
+}
+
 
 
 
@@ -17,9 +22,8 @@
     padding-right: 50px;
 }
 .card {
-    background-color: rgba(133, 223, 31, 0.178);
-    border: .25px solid rgba(255, 255, 255, 0);
-    border-radius: 10px;
+    background-color:white;
+    box-shadow: 0 2px 2px 2px rgb(128,128,128) ;
     max-width: 325px;
     min-height: 240px;
     margin: 60px 50px 0 50px;
@@ -28,17 +32,15 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-color: rgba(238, 255, 0, 0.589);
-    border: 1px solid rgb(0, 0, 0);
-    border-radius: 8px;
-    min-width: 300px;
+    background-color: blue;
+    min-width: 325px;
     position: relative;
     bottom: 1px;
     padding: 10px 0 10px 0;
 }
 .card-head h3, h4 {
     padding: 5px;
-    color:black;
+    color:white;
 }
 .card-body {
     display: flex;
